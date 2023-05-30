@@ -1,0 +1,16 @@
+#Ignores the results folder
+/results/* 
+!/results/README.md
+
+#Ignores the data folder
+/data/* 
+!/data/README.md
+
+*.py[cod]
+__pycache__/
+._*
+._.DS_Store
+.DS_Store
+*.swp
+*.swo
+*~
