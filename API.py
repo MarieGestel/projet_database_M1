@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, jsonify, render_template
 from csv import DictReader
-import csv,json
 
 api = Flask(__name__)
 
