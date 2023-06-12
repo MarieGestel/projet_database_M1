@@ -12,6 +12,16 @@ def tv_news():
         return (jsonify(list_of_dict))
              
         #return render_template("API.html")
+      
+
+def calculate(a,b):
+      a = 1
+      b = 2
+      count = a + b
+      return count
+
+#def count_tf1
+
 
 if __name__ == "__main__":
     api.run(debug=True)
