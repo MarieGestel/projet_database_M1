@@ -16,12 +16,12 @@ services:
 
   postgres:
     image: postgres:13.6
-    container_name: postgres
+    # container_name: postgres
     ports:
       - "5432:5432"
     hostname: postgres
-    volumes:
-      - './pgdata:/var/lib/postgresql/data' # persist data https://stackoverflow.com/a/41650891/3535853
+    # volumes:
+      # - './pgdata:/var/lib/postgresql/data' # persist data https://stackoverflow.com/a/41650891/3535853
     environment:
       POSTGRES_USER: user
       POSTGRES_DB: database-tvnews
