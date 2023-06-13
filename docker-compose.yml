@@ -26,7 +26,3 @@ services:
       POSTGRES_USER: user
       POSTGRES_DB: mydb
       POSTGRES_PASSWORD: misterbauer
-
-      #POSTGRES_USER: user
-      #POSTGRES_DB: database-tvnews
-      #POSTGRES_PASSWORD: password
