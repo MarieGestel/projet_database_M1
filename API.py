@@ -1,17 +1,13 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, jsonify, render_template
-from csv import DictReader
-#pip install Flask SQLAlchemy psycopg2
+from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
-import csv
-from flask import request
 import psycopg2
 from flask_migrate import Migrate
 
 
 
 api = Flask(__name__)
-#app = Flask(__name__)
+
 api.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:misterbauer@postgres:5432/mydb'
 db = SQLAlchemy(api)
 migrate = Migrate(api, db)
