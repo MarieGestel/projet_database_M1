@@ -1,6 +1,7 @@
 #https://docs.docker.com/language/python/build-images/
 
-FROM python:3.10.0-alpine
+#FROM python:3.11.3-alpine
+FROM python:3.11.3-slim-buster
 
 WORKDIR /app
 

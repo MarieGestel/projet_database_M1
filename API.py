@@ -40,7 +40,14 @@ def obtenir_utilisateurs():
             'media': info.media
         })
     return (jsonify(result))
+      
+def calculate(a,b):
+      a = 1
+      b = 2
+      count = a + b
+      return count
 
+#def count_tf1
 
 if __name__ == "__main__":
     api.cli.add_command(db.init_app(api))
