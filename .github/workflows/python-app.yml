@@ -37,3 +37,6 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
+    - name : docker
+      run: |
+        docker compose run my-python-app pytest
