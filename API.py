@@ -5,29 +5,42 @@ from csv import DictReader
 from flask_sqlalchemy import SQLAlchemy
 import csv
 from flask import request
+import psycopg2
 
       #POSTGRES_USER: user
-      #POSTGRES_DB: database-tvnews
+      #POSTGRES_DB: databasetvnews
       #POSTGRES_PASSWORD: password
+from flask_migrate import Migrate
+
+
+
+
 api = Flask(__name__)
 #app = Flask(__name__)
-api.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:password@postgres:5432/database-tvnews'
+api.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:misterbauer@postgres:5432/mydb'
 db = SQLAlchemy(api)
+migrate = Migrate(api, db)
 
 
-class User(db.Model):
+class News(db.Model):
+    __tablename__ = "tv_news"
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.String(120), unique=False, nullable=False)
     title = db.Column(db.String(120), unique=False, nullable=False)
     url = db.Column(db.String(500), unique=False, nullable=False)
     media = db.Column(db.String(50), unique=False, nullable=False)
 
-    def __repr__(self):
-        return '<User %r>' % self.username
+
+    
+    #def __repr__(self):
+     # return '<User %r>' % self.username
+
+      
+
 
 @api.route('/sauvegarder_csv', methods=['POST'])
 def sauvegarder_csv():
-    fichier = request.files['fichier_csv']
+    fichier = request.files['drought-tv-news.csv']
 
     if fichier:
         donnees = fichier.read().decode('utf-8')
@@ -35,7 +48,7 @@ def sauvegarder_csv():
 
 
         for ligne in lignes:
-            nouvel_utilisateur = User(date=ligne[0], title=ligne[1], url=ligne[2], media=ligne[3])
+            nouvel_utilisateur = News(date=ligne[0], title=ligne[1], url=ligne[2], media=ligne[3])
             db.session.add(nouvel_utilisateur)
 
 
@@ -45,20 +58,23 @@ def sauvegarder_csv():
         return 'Données CSV sauvegardées avec succès'
     else:
         return 'Aucun fichier CSV n\'a été envoyé'
+
+#curl -X POST -F "drought-tv-news.csv" http://localhost:8080/sauvegarder_csv
+
     
 
 # Pour lire les données depuis une BDD à l'aide d'un API
 
 @api.route('/', methods=['GET'])
 def obtenir_utilisateurs():
-    utilisateurs = User.query.all()
+    news = News.query.all()
     result = []
-    for utilisateur in utilisateurs:
+    for info in news:
         result.append({
-            'date': utilisateur.date,
-            'title': utilisateur.title,
-            'url': utilisateur.url,
-            'media': utilisateur.media
+            'date': info.date,
+            'title': info.title,
+            'url': info.url,
+            'media': info.media
         })
     return (jsonify(result))
 
@@ -79,7 +95,14 @@ def tv_news():
 
 
 if __name__ == "__main__":
-    api.run(debug=True)
+    api.cli.add_command(db.init_app(api))
+    api.cli.add_command(db)
+    api.run(debug=True, port=8080)
+
+#if __name__ == "__main__":
+    #api.run(debug=True)
+ #   api.run(debug=True, port=8080)
+
 
 
 ####
